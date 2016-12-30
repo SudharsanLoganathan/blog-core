@@ -20,10 +20,9 @@ public class UserDetailDAO {
 	}
 	 
 		public void delete(final UserDetail user) {
-			final String sql = "delete from USER_DETAILS where ID=?";
+			final String sql = "UPDATE USER_DETAILS SET ACTIVE=0 WHERE ID=?";
 			final Object[] params = { user.getId() };
 			jdbcTemplate.update(sql, params);
-
 		}
 		
 		public void update(final UserDetail user) {
@@ -33,7 +32,7 @@ public class UserDetailDAO {
 
 }
 		public List<UserDetail> list() {
-			final String sql = "select ID,NAME,PASSWORD,EMAIL_ID,ROLE_ID from USER_DETAILS";
+			final String sql = "select ID,NAME,PASSWORD,EMAIL_ID,ROLE_ID from USER_DETAILS WHERE ACTIVE=1";
 			return jdbcTemplate.query(sql, (rs, rowNum) -> 
 				 convert(rs)
 		);
@@ -49,21 +48,10 @@ public class UserDetailDAO {
 			user.setRoleId(role);
 			return user;
 		}
-		public void login(final UserDetail user) {
-				final String sql = "SELECT IFNULL((SELECT 1 FROM USER_DETAI WHERE NAME=? AND PASSWORD=?),NULL);";
-				final Object[] params = {user.getName(),user.getPassword()};
-			Integer value=jdbcTemplate.queryForObject(sql,params,Integer.class);
-			if(value!=null){
-            System.out.print("Login Successfull");
-        		  }
-			else
-			{
-				System.out.print("Invalid UserName/password");			
-				}
-		}
+		
 		
 		public UserDetail getIdByEI(String emailid){
-			String sql="SELECT ID FROM USER_DETAILS WHERE EMAIL_ID=?";
+			String sql="SELECT ID FROM USER_DETAILS WHERE EMAIL_ID=? AND ACTIVE=1";
 			Object[] params={emailid};
 			return jdbcTemplate.queryForObject(sql,params, (rs, rowNum) ->{
 				UserDetail user = new UserDetail();
@@ -72,7 +60,7 @@ public class UserDetailDAO {
 		});
 		}
 			public UserDetail getIdByPW(String password){
-				String sql="SELECT ID FROM USER_DETAILS WHERE PASSWORD=?";
+				String sql="SELECT ID FROM USER_DETAILS WHERE PASSWORD=? AND ACTIVE=1";
 				Object[] params={password};
 				return jdbcTemplate.queryForObject(sql,params, (rs, rowNum) ->{
 					UserDetail user = new UserDetail();
@@ -82,14 +70,17 @@ public class UserDetailDAO {
 			}
 				public UserDetail checkUser(Integer idByEmail , Integer idByPassword ) {
 					if (idByEmail == idByPassword) {
-							String sql = "select ID,NAME,PASSWORD,EMAIL_ID from USER_DETAILS WHERE ID=?";
+							String sql = "select ID,NAME,PASSWORD,EMAIL_ID,ROLE_ID from USER_DETAILS WHERE ID=?";
 							 Object[] params={idByEmail};
 							return jdbcTemplate.queryForObject(sql,params, (rs, rowNum) ->{
 								UserDetail user = new UserDetail();
+								Role role=new Role();
+								role.setId(rs.getInt("ROLE_ID"));
 								user.setId(rs.getInt("ID"));
 								user.setName(rs.getString("NAME"));
 								user.setPassword(rs.getString("PASSWORD"));
 								user.setEmailId(rs.getString("EMAIL_ID"));
+								user.setRoleId(role);
 								return user;
 							});
 						}
