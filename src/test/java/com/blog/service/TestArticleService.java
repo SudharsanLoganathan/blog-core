@@ -37,13 +37,10 @@ public class TestArticleService {
 	*/
 		ArticleService articleService=new ArticleService();
 		UserDetail userDetail=new UserDetail();
-		userDetail.setName("sudhar");
-       try{
+		userDetail.setId(7);
+
 			articleService.serviceGetArticlesPublishedByUser(userDetail);
-		}
-		catch(ServiceException e){
-			e.printStackTrace();
-		}
+			
 		
 }
 }

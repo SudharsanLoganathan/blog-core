@@ -47,17 +47,18 @@ public class UserService {
 		}
 
 	}
-	public void serviceLogin(UserDetail user) throws ServiceException {
+	public Integer serviceLogin(UserDetail user) throws ServiceException {
 		UserDetailDAO userDetailDAO = new UserDetailDAO();
 		try {
 			Integer i=userDetailDAO.getIdByEI(user.getEmailId()).getId();
 			Integer j=userDetailDAO.getIdByPW(user.getPassword()).getId();
 			userDetailDAO.checkUser(i, j);
+			return i;
 		} 
 		catch (Exception e) {
 			throw new ServiceException("Unable to login",e);
 		}
-		
+	
 	}
 
 

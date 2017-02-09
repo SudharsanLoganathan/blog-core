@@ -7,12 +7,10 @@ import com.blog.dao.ArticleDAO;
 import com.blog.dao.SeedCatagoryDAO;
 import com.blog.exception.ArticleInvalidException;
 import com.blog.exception.ServiceException;
-import com.blog.exception.UserInvalidException;
 import com.blog.model.Article;
 import com.blog.model.SeedCatagory;
 import com.blog.model.UserDetail;
 import com.blog.validator.ArticleValidator;
-import com.blog.validator.UserValidator;
 
 public class ArticleService {
 	public void serviceSave(Article article) throws ServiceException {
@@ -63,17 +61,14 @@ public class ArticleService {
 		articleCategoryDAO.save(articleDAO,seedCatagoryDAO);
 		
 	}
-	public void serviceGetArticlesPublishedByUser(UserDetail userDetail) throws UserInvalidException, ServiceException{
-        UserValidator userValidator=new UserValidator();
-		ArticleDAO articleDAO = new ArticleDAO();
-		try {
-			userValidator.validateUserName(userDetail);
-			List<Article> a=articleDAO.getArticlesPublishedByUser(userDetail);
-			for(Article s:a){
-				System.out.println(s.getTitle()+" "+s.getContent());
-			}
-		} catch (UserInvalidException e) {
-			throw new ServiceException(e.getMessage(), e);
-		}
+	public List<Article> serviceGetArticlesPublishedByUser(UserDetail userDetail) {
+       // UserValidator userValidator=new UserValidator();
+		    ArticleDAO articleDAO = new ArticleDAO();
+//		    List<Article> a=articleDAO.getArticlesPublishedByUser(userDetail);
+//			for(Article s:a)
+//				System.out.println(s.getTitle()+" "+s.getContent());
+
+		  return articleDAO.getArticlesPublishedByUser(userDetail);
+		
 	}
 }

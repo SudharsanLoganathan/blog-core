@@ -64,8 +64,8 @@ public class ArticleDAO {
 
 	public List<Article> getArticlesPublishedByUser(UserDetail userDetail)
 	{
-		String sql="SELECT ARTICLES.`TITLE`,ARTICLES.`CONTENT` FROM ARTICLES JOIN USER_DETAILS ON ARTICLES.`USER_ID`=USER_DETAILS.`ID` WHERE USER_DETAILS.`NAME`=?";
-		Object[] params={userDetail.getName()};
+		String sql="SELECT ARTICLES.`TITLE`,ARTICLES.`CONTENT` FROM ARTICLES JOIN USER_DETAILS ON ARTICLES.`USER_ID`=USER_DETAILS.`ID` WHERE USER_DETAILS.`ID`=?";
+		Object[] params={userDetail.getId()};
 		return jdbcTemplate.query(sql, params,(rs,rowNum)-> convertArticles(rs));
 	}
 	static Article convertArticles(final ResultSet rs) throws SQLException {
