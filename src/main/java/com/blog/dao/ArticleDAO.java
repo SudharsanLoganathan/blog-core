@@ -64,7 +64,7 @@ public class ArticleDAO {
 
 	public List<Article> getArticlesPublishedByUser(UserDetail userDetail)
 	{
-		String sql="SELECT ARTICLES.`TITLE`,ARTICLES.`CONTENT` FROM ARTICLES JOIN USER_DETAILS ON ARTICLES.`USER_ID`=USER_DETAILS.`ID` WHERE USER_DETAILS.`ID`=?";
+		String sql="SELECT TITLE,CONTENT,CREATED_DATE,MODIFIED_DATE FROM ARTICLES WHERE ARTICLES.`USER_ID`=?";
 		Object[] params={userDetail.getId()};
 		return jdbcTemplate.query(sql, params,(rs,rowNum)-> convertArticles(rs));
 	}
@@ -72,6 +72,8 @@ public class ArticleDAO {
 		Article article=new Article();
 		article.setTitle(rs.getString("TITLE"));
 		article.setContent(rs.getString("CONTENT"));
+		article.setCreatedDate(rs.getTimestamp("CREATED_DATE").toLocalDateTime());
+		article.setModifiedDate(rs.getTimestamp("MODIFIED_DATE").toLocalDateTime());
 		return article;
 	}
 }
