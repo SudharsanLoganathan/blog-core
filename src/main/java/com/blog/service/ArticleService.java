@@ -62,12 +62,7 @@ public class ArticleService {
 		
 	}
 	public List<Article> serviceGetArticlesPublishedByUser(UserDetail userDetail) {
-       // UserValidator userValidator=new UserValidator();
 		    ArticleDAO articleDAO = new ArticleDAO();
-//		    List<Article> a=articleDAO.getArticlesPublishedByUser(userDetail);
-//			for(Article s:a)
-//				System.out.println(s.getTitle()+" "+s.getContent());
-
 		  return articleDAO.getArticlesPublishedByUser(userDetail);
 		
 	}

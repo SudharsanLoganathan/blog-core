@@ -56,7 +56,7 @@ public class UserService {
 			return i;
 		} 
 		catch (Exception e) {
-			throw new ServiceException("Unable to login",e);
+			throw new ServiceException("Invalid EmailId/Password",e);
 		}
 	
 	}
