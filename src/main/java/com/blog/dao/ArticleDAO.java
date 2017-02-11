@@ -20,7 +20,7 @@ public class ArticleDAO {
 	}
 	
 	public void delete(final Article article) {
-		final String sql = "delete from ARTICLES where ID=?";
+		final String sql = "UPDATE ARTICLES SET ACTIVE=0 WHERE ID=?";
 		final Object[] params = { article.getId() };
 		jdbcTemplate.update(sql, params);
 
@@ -64,12 +64,13 @@ public class ArticleDAO {
 
 	public List<Article> getArticlesPublishedByUser(UserDetail userDetail)
 	{
-		String sql="SELECT TITLE,CONTENT,CREATED_DATE,MODIFIED_DATE FROM ARTICLES WHERE ARTICLES.`USER_ID`=?";
+		String sql="SELECT ID,TITLE,CONTENT,CREATED_DATE,MODIFIED_DATE FROM ARTICLES WHERE ARTICLES.`USER_ID`=? AND ACTIVE=1";
 		Object[] params={userDetail.getId()};
 		return jdbcTemplate.query(sql, params,(rs,rowNum)-> convertArticles(rs));
 	}
 	static Article convertArticles(final ResultSet rs) throws SQLException {
 		Article article=new Article();
+		article.setId(rs.getInt("ID"));
 		article.setTitle(rs.getString("TITLE"));
 		article.setContent(rs.getString("CONTENT"));
 		article.setCreatedDate(rs.getTimestamp("CREATED_DATE").toLocalDateTime());

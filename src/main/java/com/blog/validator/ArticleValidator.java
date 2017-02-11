@@ -25,14 +25,14 @@ public class ArticleValidator {
 
 		} else if (article.getContent() == null || "".equals(article.getContent().trim())) {
 			throw new ArticleInvalidException("Invalid Content");
-		} else if (article.getUserId().getId() < 0) {
+		} else if (article.getId() < 0) {
 			throw new ArticleInvalidException("Invalid ID");
 		}
 
 	}
 
 	public void validateDelete(Article article) throws ArticleInvalidException {
-		if (article.getUserId().getId() < 0) {
+		if (article.getId() < 0) {
 			throw new ArticleInvalidException("Invalid ID");
 		}
 	}
