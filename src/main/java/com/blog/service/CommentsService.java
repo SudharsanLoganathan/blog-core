@@ -48,19 +48,18 @@ public class CommentsService {
 		}
 	}
 
-	public void serviceListAllComments() {
+	public List<Comment> serviceListAllComments() {
 		CommentDAO commentDAO = new CommentDAO();
-		commentDAO.list();
+		return commentDAO.list();
 	}
-	public void serviceShowCommentsByArticles(Article article) throws ArticleInvalidException, ServiceException{
+	public List<Comment> serviceShowCommentsByArticles(Article article) throws ArticleInvalidException, ServiceException{
 		ArticleValidator articleValidator=new ArticleValidator();
 		CommentDAO commentDAO = new CommentDAO();
 
 		try {
 			articleValidator.validateTitle(article);
-			List<Comment> a=commentDAO.showCommentsByArticles(article);
-			for(Comment s:a)
-				System.out.println(s.getComments());
+		     return commentDAO.showCommentsByArticles(article);
+			
 		} catch (ArticleInvalidException e) {
 			throw new ServiceException(e.getMessage(), e);
 		}

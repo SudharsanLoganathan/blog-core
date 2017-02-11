@@ -19,14 +19,16 @@ public class TestCommentService {
 			System.out.println(s.getComments());
 	
 */
-		CommentsService commentsService=new CommentsService();
-		Article article=new Article();
-		article.setTitle("");
-		try{
-		commentsService.serviceShowCommentsByArticles(article);
-	}
-			catch(ServiceException e){
-				e.printStackTrace();
-	
-			}
+//		CommentsService commentsService=new CommentsService();
+//		Article article=new Article();
+//		article.setTitle("");
+//		try{
+//		commentsService.serviceShowCommentsByArticles(article);
+//	}
+//			catch(ServiceException e){
+//				e.printStackTrace();
+//	
+//			}
+		CommentDAO dao=new CommentDAO();
+		System.out.println(dao.list());
 }}

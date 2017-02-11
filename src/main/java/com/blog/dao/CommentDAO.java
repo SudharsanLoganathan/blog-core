@@ -31,31 +31,34 @@ public class CommentDAO {
 		jdbcTemplate.update(sql, params);
 	}
 	public List<Comment> list() {
-		final String sql = "select ID,ARTICLE_ID,USER_ID,COMMENTS from COMMENTS";
+		final String sql = "SELECT USER_DETAILS.`NAME`,ARTICLES.`TITLE`,COMMENTS.`COMMENTS` FROM ARTICLES JOIN USER_DETAILS JOIN COMMENTS ON ARTICLES.`ID`=COMMENTS.`ARTICLE_ID` AND USER_DETAILS.`ID`=COMMENTS.`USER_ID`";
 		return jdbcTemplate.query(sql, (rs, rowNum) -> 
 			 convert(rs)
 	);
 	}
 	static Comment convert(final ResultSet rs) throws SQLException {
 		Comment comments = new Comment();
-		comments.setId(rs.getInt("ID"));
+		//comments.setId(rs.getInt("ID"));
 		Article article= new Article();
-		article.setId(rs.getInt("ARTICLE_ID"));
+		UserDetail userDetail=new UserDetail();
+		userDetail.setName(rs.getString("NAME"));
+		article.setTitle(rs.getString("TITLE"));
+		comments.setUserId(userDetail);
 		comments.setArticleId(article);
-		UserDetail user= new UserDetail();
-		user.setId(rs.getInt("USER_ID"));
-		comments.setUserId(user);
 		comments.setComments(rs.getString("COMMENTS"));
 		return comments;
 	}
 	public List<Comment> showCommentsByArticles(Article article)
 	{
-		String sql="SELECT COMMENTS.`COMMENTS` FROM COMMENTS JOIN ARTICLES ON COMMENTS.`ARTICLE_ID`=ARTICLES.`ID` WHERE ARTICLES.`TITLE`=?";
+		String sql="SELECT ARTICLES.`TITLE`,COMMENTS.`COMMENTS` FROM COMMENTS JOIN ARTICLES ON COMMENTS.`ARTICLE_ID`=ARTICLES.`ID` WHERE ARTICLES.`TITLE`=?";
 		Object[] params={article.getTitle()};
 		return jdbcTemplate.query(sql,params,(rs,rowNum)-> convertComments(rs));
 	}
 	static Comment convertComments(final ResultSet rs) throws SQLException {
 		Comment comment=new Comment();
+		Article article=new Article();
+		article.setTitle(rs.getString("TITLE"));
+		comment.setArticleId(article);
 		comment.setComments(rs.getString("COMMENTS"));
 		return comment;
 	}
