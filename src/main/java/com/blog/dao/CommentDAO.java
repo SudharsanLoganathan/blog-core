@@ -15,31 +15,26 @@ public class CommentDAO {
 	private final JdbcTemplate jdbcTemplate = ConnectionUtil.getJdbcTemplate();
 	
 	public void save(final Comment comments) {
-		final String sql = "insert into COMMENTS(ARTICLE_ID,USER_ID,COMMENTS) values (?,?,?) ";
+		final String sql = "insert into COMMENTS(ARTICLE_ID,USER_ID,COMMENTS) values (?,?,?)";
 		final Object[] params = {comments.getArticleId().getId(),comments.getUserId().getId(),comments.getComments()};
 		jdbcTemplate.update(sql, params);
-
 	}
-	
 	public void delete(final Comment comments) {
 		final String sql = "delete from COMMENTS where ARTICLE_ID=?";
 		final Object[] params = {comments.getArticleId().getId() };
 		jdbcTemplate.update(sql, params);
-
 	}
 	
 	public void update(final Comment comments) {
 		final String sql = "update COMMENTS set COMMENTS=? where ARTICLE_ID=?";
 		final Object[] params = {comments.getComments(),comments.getArticleId().getId()};
 		jdbcTemplate.update(sql, params);
-
 	}
 	public List<Comment> list() {
 		final String sql = "select ID,ARTICLE_ID,USER_ID,COMMENTS from COMMENTS";
 		return jdbcTemplate.query(sql, (rs, rowNum) -> 
 			 convert(rs)
 	);
-
 	}
 	static Comment convert(final ResultSet rs) throws SQLException {
 		Comment comments = new Comment();

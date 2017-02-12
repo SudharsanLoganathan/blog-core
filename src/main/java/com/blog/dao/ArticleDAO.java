@@ -33,7 +33,7 @@ public class ArticleDAO {
 
 	}
 	public List<Article> list() {
-		final String sql = "select ID,USER_ID,TITLE,CONTENT,CREATED_DATE,MODIFIED_DATE,ACTIVE from ARTICLES";
+		final String sql = "SELECT ARTICLES.`ID`,NAME,TITLE,CONTENT,CREATED_DATE,MODIFIED_DATE FROM ARTICLES JOIN USER_DETAILS ON ARTICLES.`USER_ID`=USER_DETAILS.`ID` WHERE ARTICLES.`ACTIVE`=1";
 		return jdbcTemplate.query(sql, (rs, rowNum) -> 
 			 convert(rs)
 	);
@@ -44,13 +44,12 @@ public class ArticleDAO {
 		Article article = new Article();
 		article.setId(rs.getInt("ID"));
 		UserDetail user=new UserDetail();
-		user.setId(rs.getInt("USER_ID"));
+		user.setName(rs.getString("NAME"));
 		article.setUserId(user);
 		article.setTitle(rs.getString("TITLE"));
 		article.setContent(rs.getString("CONTENT"));
 		article.setCreatedDate(rs.getTimestamp("CREATED_DATE").toLocalDateTime());
 		article.setModifiedDate(rs.getTimestamp("MODIFIED_DATE").toLocalDateTime());
-		article.setActive(rs.getBoolean("ACTIVE"));
 		return article;
 	}
 	public Integer getArticleLastInsertedId()

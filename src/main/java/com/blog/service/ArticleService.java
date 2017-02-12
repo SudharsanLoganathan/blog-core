@@ -49,9 +49,9 @@ public class ArticleService {
 		}
 	}
 
-	public void serviceListAllUsers() {
+	public List<Article> serviceListAllArticles() {
 		ArticleDAO articleDAO = new ArticleDAO();
-		System.out.println(articleDAO.list());
+		return articleDAO.list();
 	}
 	public void postArticleService(Article article,SeedCatagory seedCatagory,ArticleDAO articleDAO,SeedCatagoryDAO seedCatagoryDAO) 
 	{
