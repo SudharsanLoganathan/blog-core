@@ -66,4 +66,10 @@ public class ArticleService {
 		  return articleDAO.getArticlesPublishedByUser(userDetail);
 		
 	}
+
+
+public UserDetail serviceGetEmailByArticleId(int article) throws ServiceException{
+	    ArticleDAO articleDAO = new ArticleDAO();
+		return articleDAO.getEmailByArticleId(article);
+}
 }

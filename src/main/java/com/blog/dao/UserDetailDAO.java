@@ -62,18 +62,6 @@ public class UserDetailDAO {
 				}
 		}
 		
-		public List<UserDetail> listParticular(int id) {
-			final String sql = "select NAME,PASSWORD,EMAIL_ID from USER_DETAILS WHERE ID=?";
-			//Object[] params={id};
-			return jdbcTemplate.query(sql, (rs, rowNum) ->{
-				UserDetail user = new UserDetail();
-				user.setName(rs.getString("NAME"));
-				user.setPassword(rs.getString("PASSWORD"));
-				user.setEmailId(rs.getString("EMAIL_ID"));
-				return user;
-			
-			});
-		}
 		public UserDetail getIdByEI(String emailid){
 			String sql="SELECT ID FROM USER_DETAILS WHERE EMAIL_ID=?";
 			Object[] params={emailid};
@@ -92,12 +80,23 @@ public class UserDetailDAO {
 					return user;
 			});
 			}
-				public void checkUser(Integer i , Integer j ) {
-					if (i == j) {
-						
+				public UserDetail checkUser(Integer idByEmail , Integer idByPassword ) {
+					if (idByEmail == idByPassword) {
+							String sql = "select ID,NAME,PASSWORD,EMAIL_ID from USER_DETAILS WHERE ID=?";
+							 Object[] params={idByEmail};
+							return jdbcTemplate.queryForObject(sql,params, (rs, rowNum) ->{
+								UserDetail user = new UserDetail();
+								user.setId(rs.getInt("ID"));
+								user.setName(rs.getString("NAME"));
+								user.setPassword(rs.getString("PASSWORD"));
+								user.setEmailId(rs.getString("EMAIL_ID"));
+								return user;
+							});
+						}
+					return null;
 					} 
 			
 }
-}
+
 
 		

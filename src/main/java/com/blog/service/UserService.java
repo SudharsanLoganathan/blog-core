@@ -47,13 +47,12 @@ public class UserService {
 		}
 
 	}
-	public Integer serviceLogin(UserDetail user) throws ServiceException {
+	public UserDetail serviceLogin(UserDetail user) throws ServiceException {
 		UserDetailDAO userDetailDAO = new UserDetailDAO();
 		try {
-			Integer i=userDetailDAO.getIdByEI(user.getEmailId()).getId();
-			Integer j=userDetailDAO.getIdByPW(user.getPassword()).getId();
-			userDetailDAO.checkUser(i, j);
-			return i;
+			Integer idByEmail=userDetailDAO.getIdByEI(user.getEmailId()).getId();
+			Integer idByPassword=userDetailDAO.getIdByPW(user.getPassword()).getId();
+			return userDetailDAO.checkUser(idByEmail, idByPassword);
 		} 
 		catch (Exception e) {
 			throw new ServiceException("Invalid EmailId/Password",e);

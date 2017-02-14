@@ -76,4 +76,13 @@ public class ArticleDAO {
 		article.setModifiedDate(rs.getTimestamp("MODIFIED_DATE").toLocalDateTime());
 		return article;
 	}
+	public UserDetail getEmailByArticleId(int articleId){
+		String sql="SELECT USER_DETAILS.`EMAIL_ID` FROM USER_DETAILS JOIN ARTICLES ON USER_DETAILS.`ID`=ARTICLES.`USER_ID` WHERE ARTICLES.`ID`=?";
+		Object[] params={articleId};
+		return jdbcTemplate.queryForObject(sql,params, (rs, rowNum) ->{
+			UserDetail userDetail=new UserDetail();
+			userDetail.setEmailId(rs.getString("EMAIL_ID"));
+			return userDetail;
+	});
+	}
 }
