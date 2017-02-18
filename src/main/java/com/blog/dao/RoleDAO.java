@@ -5,10 +5,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.blog.model.Role;
 import com.blog.util.ConnectionUtil;
 
+@Repository
 public class RoleDAO {
 	private final JdbcTemplate jdbcTemplate = ConnectionUtil.getJdbcTemplate();
 

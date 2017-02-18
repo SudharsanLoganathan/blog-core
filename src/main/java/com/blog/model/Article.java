@@ -1,7 +1,6 @@
 package com.blog.model;
 
 import java.time.LocalDateTime;
-
 import lombok.Data;
 
 @Data

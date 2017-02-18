@@ -1,8 +1,11 @@
 package com.blog.validator;
 
+import org.springframework.stereotype.Repository;
+
 import com.blog.exception.RoleInvalidException;
 import com.blog.model.Role;
 
+@Repository
 public class RoleValidator {
 	public void validateSave(Role role) throws RoleInvalidException
 	{

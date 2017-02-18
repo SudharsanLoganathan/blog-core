@@ -1,8 +1,11 @@
 package com.blog.validator;
 
+import org.springframework.stereotype.Repository;
+
 import com.blog.exception.UserInvalidException;
 import com.blog.model.UserDetail;
 
+@Repository
 public class UserValidator {
 
 	public void validateSave(UserDetail user) throws UserInvalidException {

@@ -1,8 +1,11 @@
 package com.blog.validator;
 
+import org.springframework.stereotype.Repository;
+
 import com.blog.exception.ArticleInvalidException;
 import com.blog.model.Article;
 
+@Repository
 public class ArticleValidator {
 	
 	public void validateSave(Article article) throws ArticleInvalidException {
@@ -10,13 +13,11 @@ public class ArticleValidator {
 			throw new ArticleInvalidException("Invalid ID");
 		} else if (article.getTitle() == null || "".equals(article.getTitle().trim())) {
 			throw new ArticleInvalidException("Invalid Title");
-		} else if (article.getCreatedDate() == null) {
-			throw new ArticleInvalidException("Invalid Date");
-		} else if (article.getContent() == null || "".equals(article.getContent().trim())) {
-			throw new ArticleInvalidException("Invalid Content");
-		} else if (article.getModifiedDate() == null) {
-			throw new ArticleInvalidException("Invalid date");
 		}
+		else if (article.getContent() == null || "".equals(article.getContent().trim())) {
+			throw new ArticleInvalidException("Invalid Content");
+		}
+		
 	}
 
 	public void validateUpdate(Article article) throws ArticleInvalidException {

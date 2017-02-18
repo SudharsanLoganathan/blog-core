@@ -5,11 +5,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.blog.model.Article;
 import com.blog.model.UserDetail;
 import com.blog.util.ConnectionUtil;
 
+@Repository
 public class ArticleDAO {
 	private final JdbcTemplate jdbcTemplate = ConnectionUtil.getJdbcTemplate();
 	

@@ -1,16 +1,21 @@
 package com.blog.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.blog.dao.RatingGivenDAO;
 import com.blog.exception.RatingInvalidException;
 import com.blog.exception.ServiceException;
 import com.blog.model.RatingGiven;
 import com.blog.validator.RatingValidator;
 
+@Service
 public class RatingService {
+	@Autowired
+	RatingValidator ratingValidator = new RatingValidator();
+	@Autowired
+	RatingGivenDAO ratingGivenDAO = new RatingGivenDAO();
 	public void serviceSave(RatingGiven ratingGiven) throws ServiceException {
-		RatingValidator ratingValidator = new RatingValidator();
-		RatingGivenDAO ratingGivenDAO = new RatingGivenDAO();
-
 		try {
 			ratingValidator.validateSave(ratingGiven);
 			ratingGivenDAO.save(ratingGiven);
@@ -20,10 +25,7 @@ public class RatingService {
 	}
 
 	public void serviceUpdate(RatingGiven ratingGiven) throws ServiceException {
-		RatingValidator ratingValidator = new RatingValidator();
-		RatingGivenDAO ratingGivenDAO = new RatingGivenDAO();
-
-		try {
+			try {
 			ratingValidator.validateUpdate(ratingGiven);
 			ratingGivenDAO.update(ratingGiven);
 		} catch (RatingInvalidException e) {
@@ -32,8 +34,6 @@ public class RatingService {
 	}
 
 	public void serviceDelete(RatingGiven ratingGiven) throws ServiceException {
-		RatingValidator ratingValidator = new RatingValidator();
-		RatingGivenDAO ratingGivenDAO = new RatingGivenDAO();
 		try {
 			ratingValidator.validateDelete(ratingGiven);
 			ratingGivenDAO.delete(ratingGiven);
@@ -43,7 +43,6 @@ public class RatingService {
 	}
 
 	public void serviceListAllRatings() {
-		RatingGivenDAO ratingGivenDAO = new RatingGivenDAO();
 		ratingGivenDAO.list();
 	}
 }

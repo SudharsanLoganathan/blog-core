@@ -4,14 +4,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.blog.model.Role;
 import com.blog.model.UserDetail;
 import com.blog.util.ConnectionUtil;
 
+@Repository
 public class UserDetailDAO {
-     JdbcTemplate jdbcTemplate = ConnectionUtil.getJdbcTemplate();
+     JdbcTemplate jdbcTemplate= ConnectionUtil.getJdbcTemplate();
 	
 	public void save(final UserDetail user) {
 		final String sql = "insert into USER_DETAILS(NAME,PASSWORD,EMAIL_ID) values (?,?,?) ";

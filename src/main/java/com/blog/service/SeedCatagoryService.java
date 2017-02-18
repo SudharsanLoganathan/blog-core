@@ -2,6 +2,9 @@ package com.blog.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.blog.dao.SeedCatagoryDAO;
 import com.blog.exception.CatagoryInvalidException;
 import com.blog.exception.ServiceException;
@@ -9,10 +12,14 @@ import com.blog.model.Article;
 import com.blog.model.SeedCatagory;
 import com.blog.validator.SeedCatagoryValidator;
 
+@Service
 public class SeedCatagoryService {
+	@Autowired
+	SeedCatagoryValidator catagoryValidator = new SeedCatagoryValidator();
+	@Autowired
+	SeedCatagoryDAO catagoryDAO = new SeedCatagoryDAO();
 	public void serviceSave(SeedCatagory catagory) throws ServiceException {
-		SeedCatagoryValidator catagoryValidator = new SeedCatagoryValidator();
-		SeedCatagoryDAO catagoryDAO = new SeedCatagoryDAO();
+		
 		try {
 			catagoryValidator.validateSave(catagory);
 			catagoryDAO.save(catagory);
@@ -22,8 +29,7 @@ public class SeedCatagoryService {
 	}
 
 	public void serviceUpdate(SeedCatagory catagory) throws ServiceException {
-		SeedCatagoryValidator catagoryValidator = new SeedCatagoryValidator();
-		SeedCatagoryDAO catagoryDAO = new SeedCatagoryDAO();
+		
 		try {
 			catagoryValidator.validateUpdate(catagory);
 			catagoryDAO.update(catagory);
@@ -33,8 +39,7 @@ public class SeedCatagoryService {
 	}
 
 	public void serviceDelete(SeedCatagory catagory) throws ServiceException {
-		SeedCatagoryValidator catagoryValidator = new SeedCatagoryValidator();
-		SeedCatagoryDAO catagoryDAO = new SeedCatagoryDAO();
+		
 		try {
 			catagoryValidator.validateDelete(catagory);
 			catagoryDAO.delete(catagory);
@@ -44,15 +49,14 @@ public class SeedCatagoryService {
 	}
 
 	public void serviceListAllCatagories() {
-		SeedCatagoryDAO catagoryDAO = new SeedCatagoryDAO();
 		catagoryDAO.list();
 	}
+	
 	public void serviceArticleByCatagory(SeedCatagory catagory) throws ServiceException{
-		SeedCatagoryValidator catagoryValidator = new SeedCatagoryValidator();
-		SeedCatagoryDAO seedCatagoryDAO = new SeedCatagoryDAO();
+		
 		try {
 			catagoryValidator.validateList(catagory);
-		    List<Article> a=seedCatagoryDAO.getArticlesByCatagory(catagory);
+		    List<Article> a=catagoryDAO.getArticlesByCatagory(catagory);
 		    for(Article s:a)
 				System.out.println(s.getTitle()+" "+s.getContent());
 		} catch (CatagoryInvalidException e) {

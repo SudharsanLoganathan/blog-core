@@ -1,8 +1,11 @@
 package com.blog.validator;
 
+import org.springframework.stereotype.Repository;
+
 import com.blog.exception.RatingInvalidException;
 import com.blog.model.RatingGiven;
 
+@Repository
 public class RatingValidator {
 
 	public void validateSave(RatingGiven ratingGiven) throws RatingInvalidException {

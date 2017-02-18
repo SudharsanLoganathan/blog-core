@@ -1,8 +1,11 @@
 package com.blog.validator;
 
+import org.springframework.stereotype.Repository;
+
 import com.blog.exception.ArticleCatagoryInvalidException;
 import com.blog.model.ArticleCatagory;
 
+@Repository
 public class ArticleCatagoryValidator {
 
 	public void validateSave(ArticleCatagory articleCatagory) throws ArticleCatagoryInvalidException {

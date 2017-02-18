@@ -2,6 +2,9 @@ package com.blog.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.blog.dao.ArticleCatagoryDAO;
 import com.blog.dao.ArticleDAO;
 import com.blog.dao.SeedCatagoryDAO;
@@ -12,10 +15,16 @@ import com.blog.model.SeedCatagory;
 import com.blog.model.UserDetail;
 import com.blog.validator.ArticleValidator;
 
+@Service
 public class ArticleService {
+	@Autowired
+	ArticleValidator articleValidator = new ArticleValidator();
+	@Autowired
+	ArticleDAO articleDAO;
+	@Autowired
+	ArticleCatagoryDAO articleCategoryDAO;
 	public void serviceSave(Article article) throws ServiceException {
-		ArticleValidator articleValidator = new ArticleValidator();
-		ArticleDAO articleDAO = new ArticleDAO();
+		
 		try {
 			articleValidator.validateSave(article);
 			articleDAO.save(article);
@@ -26,8 +35,7 @@ public class ArticleService {
 	}
 
 	public void serviceUpdate(Article article) throws ServiceException {
-		ArticleValidator articleValidator = new ArticleValidator();
-		ArticleDAO articleDAO = new ArticleDAO();
+
 		try {
 			articleValidator.validateUpdate(article);
 			articleDAO.update(article);
@@ -38,8 +46,7 @@ public class ArticleService {
 	}
 
 	public void serviceDelete(Article article) throws ServiceException {
-		ArticleValidator articleValidator = new ArticleValidator();
-		ArticleDAO articleDAO = new ArticleDAO();
+		
 		try {
 			articleValidator.validateDelete(article);
 			articleDAO.delete(article);
@@ -50,19 +57,16 @@ public class ArticleService {
 	}
 
 	public List<Article> serviceListAllArticles() {
-		ArticleDAO articleDAO = new ArticleDAO();
 		return articleDAO.list();
 	}
 	public void postArticleService(Article article,SeedCatagory seedCatagory,ArticleDAO articleDAO,SeedCatagoryDAO seedCatagoryDAO) 
 	{
 		articleDAO.save(article);
 		seedCatagoryDAO.save(seedCatagory);
-		ArticleCatagoryDAO articleCategoryDAO = new ArticleCatagoryDAO();
 		articleCategoryDAO.save(articleDAO,seedCatagoryDAO);
 		
 	}
 	public List<Article> serviceGetArticlesPublishedByUser(UserDetail userDetail) {
-		    ArticleDAO articleDAO = new ArticleDAO();
 		  return articleDAO.getArticlesPublishedByUser(userDetail);
 		
 	}

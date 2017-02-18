@@ -1,9 +1,12 @@
 
 package com.blog.validator;
 
+import org.springframework.stereotype.Repository;
+
 import com.blog.exception.CatagoryInvalidException;
 import com.blog.model.SeedCatagory;
 
+@Repository
 public class SeedCatagoryValidator {
 	
 

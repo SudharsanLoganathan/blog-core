@@ -1,16 +1,22 @@
 package com.blog.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.blog.dao.RoleDAO;
 import com.blog.exception.RoleInvalidException;
 import com.blog.exception.ServiceException;
 import com.blog.model.Role;
 import com.blog.validator.RoleValidator;
 
+@Service
 public class RoleService {
+	@Autowired
+	RoleValidator roleValidator= new RoleValidator();
+	@Autowired
+	RoleDAO roleDAO = new RoleDAO();
 	public void serviceSave(Role role) throws ServiceException
 	{
-		RoleValidator roleValidator= new RoleValidator();
-		RoleDAO roleDAO = new RoleDAO();
 		try {
 			roleValidator.validateSave(role);
 			roleDAO.save(role);
@@ -20,8 +26,7 @@ public class RoleService {
 	}
 	public void serviceUpdate(Role role) throws ServiceException
 	{
-		RoleValidator roleValidator= new RoleValidator();
-		RoleDAO roleDAO = new RoleDAO();
+		
 		try {
 			roleValidator.validateUpdate(role);
 			roleDAO.update(role);
@@ -31,8 +36,7 @@ public class RoleService {
 	}
 	public void serviceDelete(Role role) throws ServiceException
 	{
-		RoleValidator roleValidator= new RoleValidator();
-		RoleDAO roleDAO = new RoleDAO();
+		
 		try {
 			roleValidator.validateDelete(role);
 			roleDAO.delete(role);
@@ -40,9 +44,9 @@ public class RoleService {
 			throw new ServiceException(e.getMessage(),e);
 		}
 	}
+	
 	public void servicListAllRoles()
 	{
-		RoleDAO roleDao=new RoleDAO();
-		roleDao.list();
+		roleDAO.list();
 	}
 }

@@ -2,17 +2,23 @@ package com.blog.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.blog.dao.UserDetailDAO;
 import com.blog.exception.ServiceException;
 import com.blog.exception.UserInvalidException;
 import com.blog.model.UserDetail;
 import com.blog.validator.UserValidator;
-
+@Service
 public class UserService {
-	public void serviceSave(UserDetail user) throws ServiceException {
-		UserValidator userValidator = new UserValidator();
-		UserDetailDAO userDetailDAO = new UserDetailDAO();
+	@Autowired
+	UserDetailDAO userDetailDAO; //= new UserDetailDAO();
+	@Autowired
+	UserValidator userValidator;// = new UserValidator();
 
+	public void serviceSave(UserDetail user) throws ServiceException {
+		
 		try {
 			userValidator.validateSave(user);
 			userDetailDAO.save(user);
@@ -23,8 +29,6 @@ public class UserService {
 	}
 
 	public void serviceUpdate(UserDetail user) throws ServiceException {
-		UserValidator userValidator = new UserValidator();
-		UserDetailDAO userDetailDAO = new UserDetailDAO();
 
 		try {
 			userValidator.validateUpdate(user);
@@ -36,9 +40,7 @@ public class UserService {
 	}
 
 	public void serviceDelete(UserDetail user) throws ServiceException {
-		UserValidator userValidator = new UserValidator();
-		UserDetailDAO userDetailDAO = new UserDetailDAO();
-
+		
 		try {
 			userValidator.validateDelete(user);
 			userDetailDAO.delete(user);
@@ -48,7 +50,7 @@ public class UserService {
 
 	}
 	public UserDetail serviceLogin(UserDetail user) throws ServiceException {
-		UserDetailDAO userDetailDAO = new UserDetailDAO();
+	
 		try {
 			Integer idByEmail=userDetailDAO.getIdByEI(user.getEmailId()).getId();
 			Integer idByPassword=userDetailDAO.getIdByPW(user.getPassword()).getId();
@@ -62,7 +64,6 @@ public class UserService {
 
 
 	public List<UserDetail> serviceListAllUsers() {
-		UserDetailDAO userDetailDAO = new UserDetailDAO();
 		return userDetailDAO.list();
 	}
 	
